@@ -1,11 +1,23 @@
 import { useState } from 'react'
 import './App.css'
-
+import Login from './pages/login'
+import theme from '../theme'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
-   <h1>Waiting for content</h1>
+     <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+            <Route path='login' element={<Login /> } />
+        </Routes>
+     
+      </Router>
+      
+     </ThemeProvider>
+   
   )
 }
 
