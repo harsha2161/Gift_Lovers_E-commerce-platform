@@ -13,6 +13,7 @@ app.use(bodyParser.json())
 app.use(
 
   (req,res,next) => {
+
     const tokenString = req.header("Authorization")
     if(tokenString != null){
 
@@ -23,7 +24,7 @@ app.use(
         (error, decoded) => {
           if(decoded != null){
             console.log(decoded);
-            req.user = decoded
+            req.user = decoded;
             next()
 
           }else{

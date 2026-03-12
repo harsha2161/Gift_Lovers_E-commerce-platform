@@ -1,42 +1,28 @@
 import product from "../models/product.js";
+import { isAdmin } from "./userController.js";
 
 export async function saveProduct(req,res){
-    if(req.user == null){
-        
-        res.status(403).json({
-            message : "unauthorized"
-        })
-        return
-    }else if (req.user.role != "admin"){
-        
-        res.status(403).json({
 
-            message : "you need to be admin"
-            
+    if(!isAdmin(req)){
+        res.status(403).json({
+            massagge : "you are not authorized to add a products"
         })
-        return
+         return
     }
+   
 
-    const Product = new product({
-        name : req.body.name,
-        id : req.body.id,
-        price : req.body.price,   
-    })
-    // Product.save().then(
-    //     () =>{
-    //         res.json({
-    //             message : "product add sucessfull"
-    //         })
-    //     }
-    // ).catch(
-    //     () =>{
-    //         res.json({
-    //             message :"procuct add not complete"
-    //         })
-    //     })
+    const Product = new product(
+        //{
+        // name : req.body.name,
+        // id : req.body.id,
+        // price : req.body.price,  
+        //}
+        req.body
+    );
+ 
 try{
     const product = await Product.save()
-    res.json(product,{
+    res.json({
     
         message : "product add successfull"
 
