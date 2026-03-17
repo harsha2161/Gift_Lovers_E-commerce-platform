@@ -3,6 +3,7 @@ import bcript from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export function createUser (req, res) {
+    // වෙනත් හෑශින් ක්‍රමයක්. සම්පූර්න කර නැත.
     //dcript password hashing with manual solting
     // const salt = crypto.randomBytes(16).toString('hex');
     // const toHashing = password  + salt;
@@ -16,35 +17,40 @@ export function createUser (req, res) {
     //     timeCost : 3,
     //     parallelism : 1,
     // });
+    
     const password = req.body.password
     const hashedpassword = bcript.hashSync(password, 10);
 
-        // if(req.body.role == "admin"){
-        //     if(req.user != null){  // " ලොග් වෙලා ඉන්නව නම් අනිවාරෙන් ටෝකෙන් එකෙන් යූසර් ගෙ විස්තර අරන් එකනව, ඒකෙ රෝල් එක ඇඩ්මින් නම් එකවුන් එක හදන්න දෙනව log wenakota witharai tiken ekk hambawenne"
-        //         if(req.user.role != "admin"){
+        if(req.body.role == "admin"){
+            if(req.user != null){  // " ලොග් වෙලා ඉන්නව නම් අනිවාරෙන් ටෝකෙන් එකෙන් යූසර් ගෙ විස්තර අරන් එකනව, ඒකෙ රෝල් එක ඇඩ්මින් නම් එකවුන් එක හදන්න දෙනව log wenakota witharai tiken ekk hambawenne"
+                if(req.user.role != "admin"){
 
-        //         res.status(403).json({
-        //             message : "you are not authorized to create admin account. place login first"
-        //         })
-        //         return // "කෝඩ් එක මෙතනින් නතර වෙනව, නැත්තන් රෙස්පොන්ස් එක යවන ඇඩ්මින් එකවුන්ට් එක ගැදෙනව"
-        //         }
-        //     }else{
+                res.status(403).json({
+                    message : "you are not authorized to create admin account. place login first"
+                })
+                return // "කෝඩ් එක මෙතනින් නතර වෙනව, නැත්තන් රෙස්පොන්ස් එක යවන ඇඩ්මින් එකවුන්ට් එක ගැදෙනව"
+                }
+            }else{
 
-        //         res.status(403).json({
-        //             message : "you are not authorized to create admin account. place login first"
-        //         })
-        //         return
-        //     }
-        // }
+                res.status(403).json({
+                    message : "you are not authorized to create admin account. place login first"
+                })
+                return
+            }
+        }
 
-    const User = new user({
+    const User = new user(
+        {
         firstName : req.body.firstName,
         lastName  :req.body.lastName,
         email : req.body.email,
         img : req.body.img,
         password : hashedpassword,
         role : req.body.role,
-    })
+        }
+
+       // req.body
+    )
     User.save().then(
         () => {
             console.log(User);
@@ -59,6 +65,7 @@ export function createUser (req, res) {
            })
         })
 }
+
 
 export function loginUser(req,res){
 
@@ -106,6 +113,21 @@ export function loginUser(req,res){
     })
 }
 
+export async function veiwUsers(req,res){
+    try{
+        const users = await user.find()
+        res.json(users)
+    }catch(err){
+        res.json(
+            {
+                message : "user show is fails",
+                error : err,
+            }
+        )
+    }
+    
+}
+
 
 export function isAdmin(req){
        if(req.user == null){    
@@ -120,6 +142,8 @@ export function isAdmin(req){
             return true
     }
 }
+
+
 
 
    

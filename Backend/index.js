@@ -10,6 +10,7 @@ var app = express()
 //middlewares 
 app.use(bodyParser.json())
 
+// jwt authondication middleware system
 app.use(
 
   (req,res,next) => {
@@ -60,7 +61,8 @@ mongoose.connect(db_URL)
   //routers calling
   app.use("/users", userRouters);
   app.use("/product", productRouter);
-
+  
+  
 
   
   
