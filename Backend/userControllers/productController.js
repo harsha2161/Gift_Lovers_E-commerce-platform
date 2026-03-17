@@ -119,6 +119,47 @@ export async function updateProduct(req,res) {
     }
 }
 
+export async function getProductById(req,res){
+
+    const productId = req.params.productId
+   
+
+    try{
+
+        const Product = await product.findOne({productId : productId})
+
+        if(Product == null){
+
+            res.status(404).json({
+                message : "product not found"
+            })
+            return
+        }
+
+        if(Product.isAvailable){
+            res.json(Product)
+
+        }else{
+            if(isAdmin(req)){
+                res.json({
+                    message : "product is out of stokes"
+                })
+
+            }else{
+                res.json(Product)
+
+            }
+        }
+        
+    }catch(err) {
+        res.status(500).json({
+            message : "product find failed",
+            error : err
+        })
+    }
+}
+
+
 
 
 
