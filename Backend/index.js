@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import jwt, { decode } from "jsonwebtoken";
 import userRouters from "./routes/userRoutes.js";
 import productRouter from "./routes/productRouter.js";
+import reviewRouter from "./routes/reviewRouter.js";
+import orderRouter from "./routes/orderRoute.js";
 
 var app = express()
 
@@ -61,6 +63,8 @@ mongoose.connect(db_URL)
   //routers calling
   app.use("/users", userRouters);
   app.use("/product", productRouter);
+  app.use("/review", reviewRouter);
+  app.use("/order", orderRouter);
   
   
 

@@ -131,11 +131,9 @@ export async function veiwUsers(req,res){
 
 export function isAdmin(req){
        if(req.user == null){    
-        
             return false
 
     }else if (req.user.role != "admin"){
-    
             return false
     }
     else{

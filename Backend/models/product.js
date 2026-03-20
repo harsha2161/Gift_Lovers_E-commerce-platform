@@ -1,5 +1,6 @@
 import mongoose, { Types } from "mongoose";
 
+
 const productSchema = mongoose.Schema({
     productId : {
         type : String,
@@ -42,6 +43,10 @@ const productSchema = mongoose.Schema({
         default : true,
     },
 
+    review : [
+        {type : String}
+    ],
+    
 });
 
 const product = mongoose.model("product", productSchema);

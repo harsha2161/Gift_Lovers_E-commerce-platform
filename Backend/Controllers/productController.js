@@ -5,7 +5,7 @@ export async function saveProduct(req,res){
 
     if(!isAdmin(req)){
         res.status(403).json({
-            massagge : "you are not authorized to add a products"
+            massage : "you are not authorized to add a products"
         })
          return
     }
@@ -122,7 +122,6 @@ export async function updateProduct(req,res) {
 export async function getProductById(req,res){
 
     const productId = req.params.productId
-   
 
     try{
 
@@ -159,8 +158,7 @@ export async function getProductById(req,res){
     }
 }
 
-
-
+ 
 
 
 
