@@ -107,7 +107,7 @@ export async function updateProduct(req,res) {
         )
 
         res.json({
-            message : "product update successfully"
+            message : "product detials update successfully"
         })
         
     }catch(err){
@@ -157,8 +157,48 @@ export async function getProductById(req,res){
         })
     }
 }
+ // ඔබගේ model එක import කිරීමට වග බලා ගන්න
 
- 
+export async function addReview(req, res) {
+    const reviewUser = req.user;
+    const reviewInfo = req.body; 
+    const productId = req.params.productId;
 
+    // 1. User, admin කෙනෙක් දැයි පරීක්ෂා කිරීම
+    if (reviewUser && reviewUser.role === "admin") {
+        return res.status(403).json({  // 403 Forbidden ලෙස වෙනස් කරන ලදි
+            message: "Admins can't add a review for a product",
+        });
+    }
 
+    // 2. Body එක හිස් දැයි පරීක්ෂා කිරීම
+    if (!reviewInfo || Object.keys(reviewInfo).length === 0) {
+        return res.status(400).json({  // 400 Bad Request ලෙස වෙනස් කරන ලදි
+            message: "Cannot add empty reviews. Please add review contents.",
+        });
+    }
 
+    try {
+        // 3. ✅ නිවැරදි කරන ලදි: array එකට review එක එක් කිරීමට $push භාවිතා කරන්න
+        const updatedProduct = await product.updateOne(
+            { productId: productId },
+            { $push: { review: { reviewInfo: reviewInfo } } } // Schema එකට ගැළපෙන පරිදි සකසා ඇත
+        );
+
+        // Product එක ඇත්තටම සොයාගෙන update කළේදැයි පරීක්ෂා කිරීම
+        if (updatedProduct.matchedCount === 0) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        return res.json({
+            message: "Product reviews updated successfully"
+        });
+
+    } catch (err) {
+        console.error("Review Error:", err);
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message,
+        });
+    }
+}

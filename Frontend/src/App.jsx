@@ -1,23 +1,37 @@
-import { useState } from 'react'
-import './App.css'
-import Login from './pages/login'
-import theme from '../theme'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/home"
+import LogIn from "./pages/login"
+import SignUp from "./pages/signup";
+import Header from "./components/header";
+import AdminPage from "./pages/admin";
+import TestPage from "./pages/testPage";
+
+
 function App() {
   
-
   return (
-     <ThemeProvider theme={theme}>
-      <Router>
-        <Routes>
-            <Route path='login' element={<Login /> } />
-        </Routes>
-     
-      </Router>
+
+   <BrowserRouter> {/*page eka wrape kra gni*/}
+    <div>
       
-     </ThemeProvider>
+        <Routes path="/*">
+        
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LogIn/>}/>
+          <Route path="/signup" element={<SignUp/>} />
+          <Route path="/admin/*" element={<AdminPage/>} />
+          <Route path="/test" element={<TestPage/>} />
+          <Route path="/*" element={<h1>404 not found</h1>} />
+
+        </Routes>
+      
+      
+    </div>
+
+   </BrowserRouter>
    
+
+
   )
 }
 
