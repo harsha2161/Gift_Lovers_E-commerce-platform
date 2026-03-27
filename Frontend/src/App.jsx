@@ -5,6 +5,8 @@ import SignUp from "./pages/signup";
 import Header from "./components/header";
 import AdminPage from "./pages/admin";
 import TestPage from "./pages/testPage";
+import ForgotPassword from "./pages/forgotPassword";
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
@@ -13,13 +15,14 @@ function App() {
 
    <BrowserRouter> {/*page eka wrape kra gni*/}
     <div>
-      
+      <Toaster position="top-center"/>
         <Routes path="/*">
         
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LogIn/>}/>
           <Route path="/signup" element={<SignUp/>} />
           <Route path="/admin/*" element={<AdminPage/>} />
+          <Route path="/forgotPassword" element={<ForgotPassword/>} />
           <Route path="/test" element={<TestPage/>} />
           <Route path="/*" element={<h1>404 not found</h1>} />
 

@@ -5,11 +5,16 @@ import jwt, { decode } from "jsonwebtoken";
 import userRouters from "./routes/userRoutes.js";
 import productRouter from "./routes/productRouter.js";
 import orderRouter from "./routes/orderRoute.js";
+import cors from "cors";
+import dotenv from "dotenv";
 
+dotenv.config(); // lord to config file detials for our projuct
 var app = express()
 
-//middlewares 
+//middlewares
+app.use(cors()) 
 app.use(bodyParser.json())
+
 
 // jwt authondication middleware system
 app.use(
@@ -39,12 +44,11 @@ app.use(
     }
 })
 
-//post and sb url
+//post and bb url
 const PORT = 5000;
-const db_URL = "mongodb+srv://prabhathharsha77_db_user:wrYjIIXVbVCMEiso@cluster0.52fd1y3.mongodb.net/?appName=Cluster0"
 
 //connecting databse and backend saver
-mongoose.connect(db_URL)
+mongoose.connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("Database is connected ");
 
@@ -60,9 +64,9 @@ mongoose.connect(db_URL)
   });
 
   //routers calling
-  app.use("/users", userRouters);
-  app.use("/product", productRouter);
-  app.use("/order", orderRouter);
+  app.use("/api/users", userRouters);
+  app.use("/api/product", productRouter);
+  app.use("/api/order", orderRouter);
 
   
   
