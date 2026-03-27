@@ -26,7 +26,7 @@ app.use(
 
       const token = tokenString.replace("Bearer ", "")
       //console.log(token);
-      jwt.verify(token, "newziland@28", 
+      jwt.verify(token, process.env.JWT_KEY, 
 
         (error, decoded) => {
           if(decoded != null){
