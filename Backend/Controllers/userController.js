@@ -19,7 +19,9 @@ export function createUser (req, res) {
     //     parallelism : 1,
     // });
     
+    
     const password = req.body.password
+   
     const hashedpassword = bcript.hashSync(password, 10);
 
         if(req.body.role == "admin"){
@@ -56,7 +58,8 @@ export function createUser (req, res) {
         () => {
             console.log(User);
             res.json({
-                message : "user create successfully"
+                message : "user create successfully",
+                 
             })
         }
     ).catch(
@@ -72,19 +75,23 @@ export function loginUser(req,res){
 
     const email = req.body.email
     const password = req.body.password
+   
 
     user.findOne({email : email}).then(
-        (user) => {
+        (user) => { 
           if(user == null){
-            res.status(404).json(
+            res.status(401).json(
                 {
-                    massage : " user not found"
+                    message : " invalid email address"
                 }
             )
           }else{
             // bcript password cheking
+            
             const isPasswordCorrect = bcript.compareSync(password, user.password)
+            //console.log(isPasswordCorrect)
             if(isPasswordCorrect){
+                
                 
                 const token = jwt.sign(
                     {
@@ -94,16 +101,16 @@ export function loginUser(req,res){
                         role : user.role,
                         img : user.img,
                     },
-                    process.env.JWT_KEY    // encript user detials with this password and set token
+                    process.env.JWT_KEY   // encript user detials with this password and set token
                 )
                 res.json({
 
                     message : "logn is sucessfull",
-                    token : token
+                    token : token,
+                    type : user.role
                 })
 
             }else{
-                console.log(user.solo);
                 res.status(401).json({
                     message : "invalid password"
 
