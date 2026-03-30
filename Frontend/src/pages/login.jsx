@@ -1,30 +1,43 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function LogIn() {
 
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const navigate = useNavigate()
 
     async function handleLogin(){
         console.log(email)
         console.log(password)
         try {
-            const response = await axios.post("http://localhost:5000/api/users/signin", {
-            email:email,
-            password:password,
+    
+            const response = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/signin", {
+              email:email,
+              password:password,
+
         },
-      
     )
-    toast.success("login Sucessful")
+     toast.success("login Sucessful")
      console.log(response)
+     localStorage.setItem("token",response.data.token)
+
+     if(response.data.type === "admin"){
+        // window.location.href = "/admin"
+        navigate("/admin")
+     }else{
+       // window.location.href = "/"
+       navigate("/")
+     }
+
+    
+
         }catch(err){
             toast.error(err.response.data.message)
         }
-
     }
 
   return (
@@ -33,7 +46,7 @@ export default function LogIn() {
       <div className="w-[400px] p-8 backdrop-blur-lg bg-white/20 border border-black/30 rounded-2xl shadow-xl">
         
         <h2 className="text-3xl font-bold text-center text-black mb-6">
-          Wellcome to gift loves🙌
+          wellcome to gift loves🙌
         </h2>
 
         <div className="space-y-4">
@@ -56,7 +69,7 @@ export default function LogIn() {
                 setPassword(e.target.value)
             }}
             value = {password}
-
+            
             type="password"
             placeholder="Password"
             className="w-full h-12 px-4 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-blue-400"

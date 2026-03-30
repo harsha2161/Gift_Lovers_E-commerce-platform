@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
 
@@ -12,6 +12,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [agreeMents, setAgreements] = useState("")
   const [error, setError] = useState("")
+  const navigate = useNavigate()
 
   async function handleCreateAcc(e){
     e.preventDefault(); // ❗ prevent refresh
@@ -41,7 +42,7 @@ export default function SignUp() {
     setError(""); // clear error
 
     try{
-      const response = await axios.post("http://localhost:5000/api/users/signup",{
+      const response = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/signup",{
         firstName : firstName,
         lastName :lastName,
         email : email,
@@ -50,11 +51,14 @@ export default function SignUp() {
 
       toast.success("Account Created Successfully");
       console.log(response);
-
+      if(response.data.message == "user create successfully"){
+          navigate("/login")
+      }
     }catch(err){
       toast.error(err.response.data.message || "Something went wrong");
     }
   }
+
 
   return (
     <div className="w-full h-screen bg-[url('/login-background.jpg')] bg-cover bg-center flex items-center justify-center">
