@@ -23,7 +23,7 @@ import { createClient } from "@supabase/supabase-js"
             console.log("image upload successfull")
 
             const publicUrl = supabase.storage.from("images").getPublicUrl(newName)
-            resolve(publicUrl)
+            resolve(publicUrl.data.publicUrl)
              
         }).catch(
             (e) => {

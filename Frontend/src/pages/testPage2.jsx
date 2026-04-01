@@ -1,32 +1,38 @@
 import { useState } from "react"
-import { createClient } from "@supabase/supabase-js";
+import mediaUpload from "../utils/mediaUpload";
 
-   
-    
-export default function TestPage2() {
+export default function TestPage2(){
 
-    const [image, setImg] = useState(null);
- 
-    function FileUpload(){
-            console.log("file upload button is clicked")
-             
-            supabase.storage.from("images").upload(image.name, image, {
-            upsert : false,
-            cacheControl : "3600"
-        }).then(() => {
-            console.log("image upload successfull")
-            const publicUrl = supabase.storage.from("images").getPublicUrl(image.name)
-            console.log(publicUrl)
 
-             
-        }).catch(
-            (e) => {
-                console.log(e)
-            }
-        )
+    const [image, setImg] = useState(null)
+
+    async function fileUpload(){
+
+    //     mediaUpload(image).then(
+    //         (res) =>{
+    //             console.log(res)
+    //         }
+    //     ).catch(
+    //         (res) => {
+    //             console.log(res)
+    //         }
+    //     )
+        
+    // }
+    try{
+
+        const url = await mediaUpload(image)
+        console.log(url)
+        
+    }catch(err){
+        console.log(err)
+        }
+
     }
+   
 
     return (
+
         <div className="w-full h-screen flex justify-center items-center flex-col">
             <input type="file" className="file-input file-input-bordered w-full max-w-xs"  // image is added for arrys like many image is added and save this images to arrays
                 onChange={(e) => {
@@ -35,7 +41,7 @@ export default function TestPage2() {
                     }} 
             />
 
-            <button className="bg-green-500 text-white font-bold py-2 px-4 rounded " onClick={FileUpload}>file uplord</button>
+            <button className="bg-green-500 text-white font-bold py-2 px-4 rounded " onClick={fileUpload}>file uplord</button>
 
         </div>
     )

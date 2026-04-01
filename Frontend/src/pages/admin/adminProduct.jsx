@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react"
-import { sampleProducts } from "../../assets/sampleData/sampleProducts"
 import axios from "axios"
+import { Link } from "react-router-dom"
 
 export default function AdminProductPage(){
    
-    const [product, setProduct] = useState(sampleProducts)
+    const [product, setProduct] = useState([])  // <<<--- me than hithenata 
 
     useEffect(() => {
         //this function looade in 1st time of run this components
         axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product").then(
         (res) =>{
             console.log(res.data)
-          //  setProduct(res.data)  //පේජ් එජ මෙතනදීඉ රීෆ්‍රෙශ් වෙනනිසා නැවත නැවත රන් වී බැක් එන්ඩ කෝල් යයි
+            setProduct(res.data)  //පේජ් එජ මෙතනදීඉ රීෆ්‍රෙශ් වෙනනිසා නැවත නැවත රන් වී බැක් එන්ඩ කෝල් යයි
           //  
         }
     )
@@ -20,65 +20,47 @@ export default function AdminProductPage(){
     
 
     return(
-      <div className="w-full h-full overflow-y-auto p-6 bg-gray-100">
-  <div className="overflow-x-auto rounded-2xl shadow-xl">
+    <div className="w-full h-full overflow-y-auto p-6 bg-gray-200">
+      <div className="overflow-x-auto h-full rounded-2xl shadow-xl relative">
     
-    <table className="w-full text-sm text-left bg-white">
+        <table className="w-full text-sm text-left bg-white">
       
-      {/* Header */}
-      <thead className="bg-gray-900 text-white text-xs uppercase tracking-wider">
-        <tr>
-          <th className="px-6 py-4 text-center">Product</th>
-          <th className="px-6 py-4 text-center">Image</th>
-          <th className="px-6 py-4 text-center">Price</th>
-          <th className="px-6 py-4 text-center">Status</th>
-        </tr>
-      </thead>
+            <thead className="bg-gray-900 text-white text-xs uppercase tracking-wider">
+              <tr>
+                <th className="px-6 py-4 text-center">Product</th>
+                <th className="px-6 py-4 text-center">Image</th>
+                <th className="px-6 py-4 text-center">Price</th>
+                <th className="px-6 py-4 text-center">Stock</th>
+              </tr>
+          </thead>
 
-      {/* Body */}
-      <tbody className="divide-y">
-        {product.map((item, index) => (
-          <tr
-            key={index}
-            className="hover:bg-gray-50 transition duration-200"
-          >
-            {/* Name */}
-            <td className="px-6 py-4 text-center font-medium text-gray-800">
-              {item.productName}
-            </td>
+    
+          <tbody className="divide-y">
+            {
+              product.map(  // අයිටෙම් ප්‍රමානයට රන් වේ
+                (item, index) => {
+                 return (
+                  // index using unqe values or is not uniqe value in this item can use index
+                  <tr key={index} className="text-center">
+                    <td>{item.productName}</td>
+                    <td>{<img src={item.img[0]} className="w-[50px] h-[50px]"/>}</td>
+                    <td>{item.lablePrice}</td>
+                    <td>{item.stoke}</td>
+                  </tr>
+                 )
+                }
+              )
+            }
+              
+          </tbody>
 
-            {/* Image */}
-            <td className="px-6 py-4 flex justify-center">
-              <img
-                src={item.img[0]}
-                alt="product"
-                className="w-14 h-14 object-cover rounded-xl border shadow-sm"
-              />
-            </td>
-
-            {/* Price */}
-            <td className="px-6 py-4 text-center text-green-600 font-bold">
-              Rs. {item.lablePrice}
-            </td>
-
-            {/* Stock */}
-            <td className="px-6 py-4 text-center">
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  item.stock > 0
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
-                }`}
-              >
-                {item.stock > 0 ? "In Stock" : "Out of Stock"}
-              </span>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-
-    </table>
+        </table>
+        <Link to={"/admin/addproduct"}><button className="absolute bottom-5 right-5 bg-green-500 text-3xl text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition">
+  +
+</button>
+</Link>
   </div>
+
 </div>
     )
 }
