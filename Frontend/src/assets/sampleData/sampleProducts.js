@@ -1,7 +1,7 @@
 export const sampleProducts = [
     {
         "productId": "P004",
-        "productName": "Wireless Mouse new vartdhfbgfnion",
+        "productName": "Wireless Mouse ",
         "altName": [
             "Bluetooth Mouse",
             "Portable Mouse",
@@ -31,7 +31,7 @@ export const sampleProducts = [
     {
 
     "productId": "P001",
-        "productName": "Wireless Mouse new vartdhfbgfnion",
+        "productName": "Wireless Mouse",
         "altName": [
             "Bluetooth Mouse",
             "Portable Mouse",
@@ -44,8 +44,8 @@ export const sampleProducts = [
             "https://example.com/images/mouse2.jpg",
             "https://example.com/images/mouse3.jpg"
         ],
-        "lablePrice": 20000500,
-        "stoke": 40,
+        "lablePrice": 2500,
+        "stoke": 80,
         "isAvailable": true,
         "__v": 0,
         "review": []
@@ -56,7 +56,7 @@ export const sampleProducts = [
         "productName": "Keyboard",
         "altName": [],
         "description": "Mechanical keyboard",
-        "img": [],
+        "img": ["b"],
         "lablePrice": 4500,
         "stoke": 50,
         "isAvailable": true,
@@ -100,3 +100,5 @@ export const sampleProducts = [
 
     
 ]
+
+

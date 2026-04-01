@@ -21,7 +21,7 @@ export default function LogIn() {
 
         },
     )
-     toast.success("login Sucessful")
+     toast.success("login Sucessfull")
      console.log(response)
      localStorage.setItem("token",response.data.token)
 
@@ -32,8 +32,6 @@ export default function LogIn() {
        // window.location.href = "/"
        navigate("/")
      }
-
-    
 
         }catch(err){
             toast.error(err.response.data.message)
