@@ -6,7 +6,7 @@ export function getCart(){
         cart = []
         localStorage.setItem("cart", JSON.stringify(cart)) //json convert to string
     }else{
-        cart = JSON.parse(cart);
+        //cart = JSON.parse(cart);
     }
     return cart
 }
@@ -56,3 +56,13 @@ export function clearCart() {
     localStorage.setItem("cart", JSON.stringify([]));
 }
 
+export function getTotle(){
+    let cart = getCart();
+    let totle = 0
+
+    for(let i=0; i<cart.length; i++){
+        totle += cart[i].lablePrice * cart[i].qty
+    }
+
+    return totle
+}
