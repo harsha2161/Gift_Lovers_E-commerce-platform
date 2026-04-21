@@ -23,21 +23,24 @@ export default function ClientProductPage(){
     )
    
 
-    return (
-        
-        <div className="w-full flex flex-wrap justify-center items-center gap-5 " >
-            
-            {
-                products.map((item, index) => {
-                    return(
-                        <ProductsCard key={index} product = {item} />
-                    )
-                })
-            }
-           
-        </div>
-           
+  return (
+  !isLoading ? (
+    <div className="w-full h-full flex flex-wrap justify-center items-center gap-5">
+
+      {products.map((item) => (
+        <ProductsCard 
+          key={item.productId} 
+          product={item} 
+        />
+      ))}
+
+    </div>
+  ) : (
+<div className="w-full h-full flex justify-center items-center">
+          <div className="w-[70px] h-[70px] border-t-[5px] rounded-full animate-spin fixed top-96"></div>
+        </div>  )
+);
                  
     
-    )
+    
 }

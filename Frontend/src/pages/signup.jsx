@@ -63,7 +63,7 @@ export default function SignUp() {
   return (
     <div className="w-full h-screen bg-[url('/login-background.jpg')] bg-cover bg-center flex items-center justify-center">
 
-      <div className="w-[400px] p-8 backdrop-blur-lg bg-white/20 border border-black/30 rounded-2xl shadow-xl">
+      <div className="w-[450px] p-8 backdrop-blur-lg bg-white/20 border border-black/30 rounded-2xl shadow-xl">
         
         <h2 className="text-3xl font-bold text-center text-black mb-6">
           Sign Up
