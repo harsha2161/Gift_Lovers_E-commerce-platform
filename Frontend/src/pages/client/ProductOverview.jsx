@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import { useParams } from "react-router-dom"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 import ImageSlider from "../../components/imageSlider"
 import Loading from "../../components/loading"
 import { addCart, clearCart, getCart, removeFromCart } from "../../utils/cart"
@@ -14,6 +14,7 @@ export default function ProductOverviewPage(){
     const [status, setStatus] = useState("loading")  // loading succes , error
     const [isLoading, setIsLoading] = useState(true)
     const [product, setProduct] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(
             () => {
@@ -63,16 +64,28 @@ export default function ProductOverviewPage(){
                             <div className="w-[400px] h-[270px] flex justify-center items-center gap-2 shadow-2xl">
                                 <button className="bg-accent rounded-2xl  p-2 cursor-pointer text-primary" onClick={
                                    () => {
-                                  
-                                    console.log("old cart")
-                                    console.log(getCart())
-                                    console.log("new cart")
                                     addCart(product, 1)
                                     console.log(getCart())
                                    }
                                     }
                                 >Add Cart</button>
-                                <button className="bg-accent rounded-2xl  p-2 cursor-pointer text-secondary">Buy Now</button>
+                                <button className="bg-accent rounded-2xl  p-2 cursor-pointer text-secondary" onClick={
+                                    () => {
+                                        navigate("/checkout", {
+                                            state : {
+                                                cart : [
+                                                     {
+                                                    productId : product.productId,
+                                                    productName : product.productName,
+                                                    img : product.img[0],
+                                                    lablePrice : product.lablePrice,
+                                                    qty : 1,
+                                                    }   
+                                                ]
+                                            }
+                                        })
+                                    }
+                                }>Buy Now</button>
                             </div>
                    </div>
                 </div>

@@ -49,6 +49,8 @@ export function addCart(product, qty){
             }
         }
         localStorage.setItem("cart", JSON.stringify(cart))
+      
+
 }
 
 

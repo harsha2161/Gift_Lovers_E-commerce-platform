@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import ClientProductPage from "./client/clientProduct";
 import ProductOverviewPage from "./client/ProductOverview";
 import ClientCart from "./client/clientCart";
+import ClientCheckout from "./client/cllientCheckout";
 
 export default function Home(){
     
@@ -19,6 +20,7 @@ export default function Home(){
                 <Route path="/contacts" element={<h1>contscts</h1>} />
                 <Route path="/overview/:id" element={<ProductOverviewPage/>} />
                 <Route path="/cart" element={<ClientCart/>} />
+                <Route path="/checkout" element={<ClientCheckout/>} />
                 <Route path="/*" element={<h1 className="font-bold flex items-center justify-center">404 not found</h1>} />
             </Routes>
         </div>
