@@ -33,7 +33,7 @@ export default function TestPage2(){
 
     return (
 
-        <div className="w-full h-screen flex justify-center items-center flex-col">
+        <div className="w-full h-screen md:bg-green-500 bg-red-400  flex justify-center items-center flex-col">
             <input type="file" className="file-input file-input-bordered w-full max-w-xs"  // image is added for arrys like many image is added and save this images to arrays
                 onChange={(e) => {
                         setImg(e.target.files[0])

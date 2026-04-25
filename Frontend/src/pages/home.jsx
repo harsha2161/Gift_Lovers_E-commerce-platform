@@ -9,8 +9,8 @@ export default function Home(){
     
    return(
     <div className="w-full h-screen flex flex-col items-center">
-       
-         <Header />
+        <Header />
+        
       
         <div className="w-full h-[calc(100%-80px)] flex flex-col items-center justify-center">
             <Routes path="/*">

@@ -40,14 +40,16 @@ export default function ProductOverviewPage(){
         {
         status == "success" && (
           
-            <div className="h-screen w-full flex">
-                <div className=" w-[50%] h-full flex justify-center items-center shadow-2xl">
+            <div className="h-full w-full flex flex-col md:flex-row md:flex items-center border">
+            <h1 className="w-full md:hidden text-center text-4xl font-semibold my-10">{product.productName} </h1>
+
+                <div className="w-full md:w-[50%] h-[600px] flex items-cener justify-center md:items-center shadow-2xl">
                 <ImageSlider images={product.img} />
                 </div>
 
-                <div className="w-[50%] h-full flex justify-center items-center">
+                <div className="w-[full] md:w-[50%] h-full flex justify-center items-center">
                    <div className="w-500px h-[600px] flex flex-col items-center text-4xl font-semibold">
-                        <h1 className="w-full text-center ">{product.productName}
+                        <h1 className="w-full hidden md:block text-center ">{product.productName}
                             {
                                 product.altName.map((altName,index) => {
                                     return(
@@ -90,7 +92,7 @@ export default function ProductOverviewPage(){
                    </div>
                 </div>
 
-                </div>
+            </div>
               
                 )}
 

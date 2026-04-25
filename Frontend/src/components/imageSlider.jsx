@@ -6,8 +6,8 @@ export default function ImageSlider(props) {
     const [currentIndex, setCurrentIndex] = useState(0);
  
     return(
-        <div className="w-[500px] h-[700px]  ">
-            <img src={images[currentIndex]} alt="products" className="w-full h-[500px] object-cover" />
+        <div className="w-[450px] h-[400px]">
+            <img src={images[currentIndex]} alt="products" className="w-full h-[300px] object-cover" />
 
             <div className="w-full h-[100px]  flex items-center justify-center shadow-xl">
                 {
