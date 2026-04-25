@@ -1,8 +1,14 @@
 import { useState } from "react"
 import { FaTrashAlt } from "react-icons/fa"
 import { useLocation } from "react-router-dom"
+import toast from "react-hot-toast";
+import axios from "axios";
+
 
 export default function ClientCart(){
+
+    const [address, setAddress] = useState();
+    const [number, SetNumber] = useState();
     
     const location = useLocation()
     const [cart, setCart] = useState(location.state?.cart || [])
@@ -34,10 +40,50 @@ export default function ClientCart(){
             setCart(newCart)
         }
     }
+
+    async function placeOrder(){
+
+        const token = localStorage.getItem("token")
+        if(!token) {
+            toast.error("pleace login to place order")
+            return
+        }
+
+        const orderInfo = {
+            orderProducts : [],
+            phone : number,
+            address : address,
+        }
+
+        for(let i=0; i<cart.length; i++){
+            const item = {
+                productId : cart[i].productId,
+                quantity : cart[i].qty,
+            }
+            orderInfo.orderProducts[i] = item
+        }
+       
+
+        try{
+
+            const res = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/order", orderInfo,{
+            headers : {
+                "Authorization" : "Bearer " + token
+            }
+            
+            })
+                toast.success("Order place Complate")
+            }catch(err){
+                console.log(err)
+              //  toast.error("Error to placing Order")
+                
+                return
+            }
+    }
    
     return(
         <div className="w-full h-full flex justify-center items-center flex-row ">
-            <div className="w-[50%]] h-full flex-col flex justify-center items-center">
+            <div className="w-[50%] h-full flex-col flex items-center overflow-y-auto">
             {
                 cart.map(
                     (item,index) => {
@@ -83,9 +129,35 @@ export default function ClientCart(){
             
             </div>
 
-          <div className="w-[50%] flex justify-center items-center">
-            <div className="w-[400px] bg-white shadow-2xl rounded-lg p-6">
+          <div className="w-[50%] flex justify-center items-center flex-col">
+                <div className="w-[400px] h-[200px]  m-2 shadow-2xl rounded-xl flex justify-center items-center flex-col">
+                    <input
+                        type="text"
+                        placeholder="Address"
+                        className="w-[350px] h-[55px] border m-2 px-4 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        onChange={
+                            (e) => {
+                                setAddress(e.target.value)
+                            }
+                        }
+                    />
 
+                    <input
+                        type="text"
+                        placeholder="Number"
+                        className="w-[350px] h-[55px]  border m-2 px-4 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                         onChange={
+                            (e) => {
+                                SetNumber(e.target.value)
+                            }
+                        }
+                       
+                    />
+
+
+                </div>
+            <div className="w-[400px] bg-white shadow-2xl rounded-lg p-6">
+            
                     <h1 className="text-2xl font-semibold mb-6">Order Summary</h1>
 
                     <div className="space-y-3 text-gray-600">
@@ -102,7 +174,10 @@ export default function ClientCart(){
                         <span className="text-orange-500"></span>
                     </div>
 
-                    <button className="w-full mt-6 bg-orange-500 text-white py-3 rounded hover:bg-orange-600 font-semibold">Place Order</button>
+                    <button className="w-full mt-6 bg-orange-500 text-white py-3 rounded hover:bg-orange-600 font-semibold" onClick={
+                       placeOrder
+                    }>Place Order</button>
+                    
             </div>
 
         </div>        

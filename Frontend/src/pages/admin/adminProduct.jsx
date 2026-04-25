@@ -33,13 +33,15 @@ export default function AdminProductPage(){
       
             <thead className="bg-gray-900 text-white text-xs uppercase tracking-wider">
               <tr>
-                <th className="px-6 py-4 text-center">Product</th>
+                <th className="px-6 py-4 text-center">Product </th>
                 <th className="px-6 py-4 text-center">Image</th>
                 <th className="px-6 py-4 text-center">Price</th>
                 <th className="px-6 py-4 text-center">Stock</th>
                 <th className="px-6 py-4 text-center">Action</th>
               </tr>
           </thead>
+
+          
 
     
           <tbody className="divide-y">
@@ -55,13 +57,13 @@ export default function AdminProductPage(){
                     <td className="flex items-center justify-center"><img src={item.img[0]} className="w-[90px] h-[80px] p-2"/></td>
                     <td>{item.lablePrice}</td>
                     <td>{item.stoke}</td>
-                    <td className="">
+                    <td>
                       <div className="flex justify-center items-center gap-3">
                         <FaTrash className="text-2xl text-red-500 cursor-pointer "onClick={
                           () => {
                             navigate("/admin/deleteprodute",{
                               state : item
-                            })
+                            }) 
                           }
                         }/>
                         <FaEdit className="text-2xl text-blue-700 cursor-pointer" onClick={
@@ -83,7 +85,7 @@ export default function AdminProductPage(){
           </tbody>
 
         </table> 
-        
+    
         : 
 
         <div className="w-full h-full flex justify-center items-center">

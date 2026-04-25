@@ -136,6 +136,38 @@ export async function veiwUsers(req,res){
     
 }
 
+export async function DeleteUSer(req,res){
+   
+    try{
+        await users.deleteOne({email : req.params.email})
+        res.json({
+            message : "user delete successfull",
+        })
+    }catch(err){
+        res.json({
+            message : "users delete failed",
+            error : err,
+        })
+    }
+}
+
+export async function BlockUser(req,res){
+    const email = req.params.email
+    const updatingData = req.body
+    try{
+        await users.updateOne(
+            {email : email},updatingData
+        )
+        res.json({
+            message : "usere blocked successfull"
+        })
+    }catch{
+        res.status(500).json({
+            message : "user block failed",
+            error : err,
+        })
+    }
+}
 
 export function isAdmin(req){
        if(req.user == null){    

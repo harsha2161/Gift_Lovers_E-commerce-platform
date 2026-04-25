@@ -103,4 +103,56 @@ export async function createOrder(req,res){
     }  
 }
 
+export async function getOrder(req,res){
+
+    if(req.user == null){
+       res.status(403).json({
+        message : "pleace login and try again",
+       })
+       return
+    }
+
+    try{
+        if(req.user.role == "admin"){
+            const orders = await order.find();
+            res.json(orders);
+        }else{
+            const orders = await order.find({email: req.user.email});
+            res.json(orders);
+        }
+
+    }catch(err){
+        res.status(500).json({
+            message : "Failed to fetch order",
+            error : err,
+        })
+    }
+}
+
+export async function updateOderStatus(req, res){
+    if(!isAdmin){
+        res.status(500).json({
+            message : "you are not authorized"
+        })
+        return
+    }
+   
+    try{
+        const orderId = req.params.orderId
+        const status = req.params.status
+
+        
+
+        await order.updateOne({orderId : orderId },{status : status})
+            res.json({
+                message : "order update successfully"
+            })
+    }catch(err){
+        res.json({
+            message : "order status update failed",
+            error : err
+        })
+    }
+}
+
 

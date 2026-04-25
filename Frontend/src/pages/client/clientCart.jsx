@@ -9,13 +9,13 @@ export default function ClientCart(){
 
     return(
         <div className="w-full h-full flex justify-center items-center flex-row ">
-            <div className="w-[50%]] h-full flex-col flex justify-center items-center">
+            <div className="w-[50%] h-full flex-col flex items-center overflow-auto">
             {
                 cart.map(
                     (item) => {
                         return(
                             
-                            <div key={item.productId} className="w-[600px] h-[100px] bg-primary shadow-2xl flex flex-row rounded-2xl m-2 flex items-center">
+                            <div key={item.productId} className="w-[600px] h-[100px] bg-primary shadow-2xl flex flex-row rounded-2xl m-2 flex items-center ove">
                                 <img src={item.img} alt="pic" className="w-[100px] h-[100px] rounded-2xl ojbect-cover"/>
 
                                 <div className="w-[300px] p-2 flex-col flex  font-bold">
